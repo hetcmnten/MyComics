@@ -23,6 +23,7 @@ class CollectionViewModel @Inject constructor(
 
     init {
         getCollection()
+        getNotes()
     }
 
     private fun getCollection() {
@@ -56,7 +57,7 @@ class CollectionViewModel @Inject constructor(
         }
     }
 
-    fun getNotes() {
+    private fun getNotes() {
         viewModelScope.launch {
             repo.getAllNotes().collect {
                 notes.value = it

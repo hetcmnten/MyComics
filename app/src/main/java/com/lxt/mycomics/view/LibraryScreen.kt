@@ -29,6 +29,7 @@ import com.lxt.mycomics.CharacterImage
 import com.lxt.mycomics.Destination
 import com.lxt.mycomics.model.CharactersApiResponse
 import com.lxt.mycomics.model.api.NetworkResult
+import com.lxt.mycomics.model.connectivity.ConnectivityObservable
 import com.lxt.mycomics.viewmodel.LibraryViewModel
 
 @Composable
@@ -39,6 +40,8 @@ fun LibraryScreen(
 ) {
     val result by vm.result.collectAsState()
     val text = vm.queryText.collectAsState()
+    val networkAvailable =
+        vm.networkAvailable.observe().collectAsState(ConnectivityObservable.Status.Available)
 
     Column(
         modifier = Modifier
@@ -46,7 +49,21 @@ fun LibraryScreen(
             .padding(bottom = paddingValues.calculateBottomPadding()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
+        if (networkAvailable.value == ConnectivityObservable.Status.Unavailable) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Red),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Network unavailable!!!",
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
         OutlinedTextField(
             value = text.value,
             onValueChange = vm::onQueryUpdate,
