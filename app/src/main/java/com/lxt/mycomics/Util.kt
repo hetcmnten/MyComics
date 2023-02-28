@@ -8,7 +8,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import okhttp3.HttpUrl
 import java.math.BigInteger
 import java.security.MessageDigest
 
@@ -28,7 +27,7 @@ fun AttributionText(text: String) {
 
 @Composable
 fun CharacterImage(
-    url: String,
+    url: String?,
     modifier: Modifier,
     contentScale: ContentScale = ContentScale.FillWidth
 ) {
